@@ -660,11 +660,11 @@ body {
   display: block;
   width: 20px;
   height: 20px;
-  background: url("assets/img/icons/plus.svg") no-repeat center/contain;
+  background: url("./../img/icons/plus.svg") no-repeat center/contain;
   transition: all 0.3s ease;
 }
 .btn-more.active::after {
-  background: url("assets/img/icons/minus.svg") no-repeat center/contain;
+  background: url("./../img/icons/minus.svg") no-repeat center/contain;
 }
 .btn-more:hover {
   opacity: 0.8;
@@ -7263,7 +7263,7 @@ form.form-search img {
   width: 18px;
   height: 18px;
   flex: 0 0 18px;
-  background: url("assets/img/icons/mark-ok.svg") center/contain no-repeat;
+  background: url("./../img/icons/mark-ok.svg") center/contain no-repeat;
 }
 .packages__footer {
   display: flex;
@@ -7465,7 +7465,7 @@ form.form-search img {
   width: 18px;
   height: 18px;
   flex: 0 0 18px;
-  background: url("assets/img/icons/mark-ok.svg") center/contain no-repeat;
+  background: url("./../img/icons/mark-ok.svg") center/contain no-repeat;
 }
 .installment__button {
   flex: 0 0 auto;
@@ -9454,7 +9454,7 @@ form.form-search img {
   right: 19px;
   width: 24px;
   height: 24px;
-  background: url("assets/img/icons/chevron.svg") center/contain no-repeat;
+  background: url("./../img/icons/chevron.svg") center/contain no-repeat;
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -9520,7 +9520,7 @@ form.form-search img {
   right: 19px;
   width: 24px;
   height: 24px;
-  background: url("assets/img/icons/chevron.svg") center/contain no-repeat;
+  background: url("./../img/icons/chevron.svg") center/contain no-repeat;
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -10154,7 +10154,7 @@ form.form-white.reviewform__form input.reviewform__file[type=file] {
   width: 24px;
   height: 24px;
   flex: 0 0 24px;
-  background: url("assets/img/icons/eye.svg") center/contain no-repeat;
+  background: url("./../img/icons/eye.svg") center/contain no-repeat;
 }
 
 @media (hover: hover) {
@@ -10510,7 +10510,7 @@ form.form-white.reviewform__form input.reviewform__file[type=file] {
   width: min(860px, 176px + 35.625vw, 100% - 30px);
   aspect-ratio: 860/336;
   margin-inline: auto;
-  background: url("assets/img/notfound/404.svg") center/contain no-repeat;
+  background: url("./../img/notfound/404.svg") center/contain no-repeat;
   pointer-events: none;
 }
 .notfound__title {

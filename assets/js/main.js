@@ -1,2 +1,948 @@
-Fancybox.bind("[data-fancybox]",{});let animationItems=document.querySelectorAll(".animation-item");if(0<animationItems.length){function onEntry(e){e.forEach(e=>{e.isIntersecting&&e.target.classList.add("animation-active")})}let e={threshold:[.5]},t=new IntersectionObserver(onEntry,e);for(let e of animationItems)t.observe(e)}let scrollWidthFunc=()=>{var e=window.innerWidth-document.body.clientWidth;document.querySelector("html").style.paddingRight=e+"px"},scrollTop=document.querySelector(".scroll-top");if(scrollTop){let e=260;function updateScrollTop(){scrollTop.hidden=window.scrollY<e}updateScrollTop(),window.addEventListener("scroll",updateScrollTop,{passive:!0}),window.addEventListener("pageshow",updateScrollTop),scrollTop.addEventListener("click",function(e){e.preventDefault(),window.scrollTo({top:0,behavior:"smooth"})})}document.addEventListener("DOMContentLoaded",function(){let t=document.querySelector(".burger");if(t){let e=document.querySelector(".header__bottom");t.addEventListener("click",()=>{t.classList.contains("active")?document.body.classList.remove("burger-lock"):document.body.classList.add("burger-lock"),e.classList.toggle("active"),t.classList.toggle("active"),document.querySelector("html").classList.toggle("burger-lock")})}let o=document.querySelector(".header");if(o){let t=o.querySelector(".burger"),n=o.querySelector(".header__top"),r=o.querySelector(".header__middle"),c=o.querySelectorAll(".header__toggle");function e(){var e;1024<window.innerWidth?(t&&t.classList.contains("active")&&t.click(),n&&r&&(e=n.offsetHeight+r.offsetHeight,o.style.setProperty("--header-offset",-e+"px")),c.forEach(e=>{e=e.closest(".header__item");e&&e.classList.remove("active")})):o.style.setProperty("--header-offset","0px")}t&&t.addEventListener("click",function(){var e=this.classList.contains("active");o.classList.toggle("header--open",e)}),e(),window.addEventListener("load",e),window.addEventListener("resize",e),c.forEach(e=>{e.addEventListener("click",function(){var e;1024<window.innerWidth||(e=this.closest(".header__item"))&&e.classList.toggle("active")})}),o.querySelectorAll(".header__item").forEach(n=>{function e(){var e,t;window.innerWidth<=1024||(e=n.querySelector(":scope > .header__dropdown"))&&(e.classList.remove("header__dropdown--left"),t=e.getBoundingClientRect(),e.classList.toggle("header__dropdown--left",t.right>window.innerWidth-10))}n.addEventListener("mouseenter",e),n.addEventListener("focusin",e)}),document.addEventListener("keydown",function(e){"Escape"===e.key&&t&&t.classList.contains("active")&&(t.click(),t.focus())})}function a(e){e.classList.remove("open"),setTimeout(()=>{e.classList.contains("open")||e.classList.remove("active")},400),document.body.classList.remove("lock"),document.querySelector("html").style.paddingRight=0,document.querySelector("html").classList.remove("lock")}var n=document.querySelectorAll(".popup-btn");let l=document.querySelectorAll(".popup"),i=document.querySelector(".original-title")?.innerHTML;document.querySelectorAll(".close-popup-btn").forEach(function(e){e.addEventListener("click",function(e){a(e.target.closest(".popup"))})}),n.forEach(function(c){c.addEventListener("click",function(e){e.preventDefault();var t,n=e.currentTarget.dataset.path;let r=document.querySelector(`[data-target="${n}"]`);r&&(l.forEach(function(e){a(e),e.addEventListener("click",function(e){e.target.closest(".popup__content")||a(e.target.closest(".popup"))})}),r.classList.add("active"),setTimeout(()=>{r.classList.add("open")},10),"popup-change"==r.getAttribute("data-target")&&(n=r.querySelector(".original-title"),c.classList.contains("change-item__btn")?c.classList.contains("doctor__btn-js")?(t=c.closest(".change-item").querySelector(".change-item__title"),n.innerHTML="Записаться на приём к врачу: "+t.innerHTML):c.classList.contains("change-item__btn_current")?n.textContent=c.textContent:(t=c.closest(".change-item").querySelector(".change-item__title"),n.innerHTML=t.innerHTML):n.innerHTML=i),"popup-jobs"==r.getAttribute("data-target")&&(t=c.closest(".jobs__items"),n=r.querySelector(".jobs__inner_original"))&&t.querySelector(".jobs__inner")&&(n.innerHTML=t.querySelector(".jobs__inner").innerHTML),e.stopPropagation(),scrollWidthFunc(),document.querySelector("html").classList.add("lock"))})});n=document.getElementById("map-placeholder");function r(){var e;document.querySelector('[src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"]')?c():((e=document.createElement("script")).type="text/javascript",e.src="https://api-maps.yandex.ru/2.1/?lang=ru_RU",e.onload=c,document.head.appendChild(e))}function c(){var e=document.getElementById("map-placeholder");e&&e.remove(),ymaps.ready(function(){var e=new ymaps.Map("map",{center:[47.231129,39.728721],zoom:13,controls:[]}),t=new ymaps.Placemark([47.231129,39.728721],{hintContent:"Ростов-на-Дону, ул. Красноармейская, д. 227",balloonContent:"Ростов-на-Дону, ул. Красноармейская, д. 227"},{iconLayout:"default#image",iconImageHref:"assets/img/icons/map-pin.svg",iconImageSize:[35,35],iconImageOffset:[-15,-15]});e.geoObjects.add(t),e.behaviors.disable(["scrollZoom"])})}n?(n.addEventListener("mouseenter",r,{once:!0}),n.addEventListener("click",r,{once:!0})):r();let s=document.querySelectorAll(".js-timer");function d(){var e=new Date,t=new Date(e),t=(t.setHours(24,0,0,0),Math.ceil((t-e)/1e3));let n=[Math.floor(t/3600),Math.floor(t%3600/60),t%60].map(e=>String(e).padStart(2,"0")).join(":");s.forEach(e=>{e.textContent=n})}s.length&&(d(),setInterval(d,1e3),document.addEventListener("visibilitychange",d)),document.querySelectorAll(".services").forEach(e=>{let a=e.querySelector(".services__list-viewport"),l=e.querySelector(".services__list"),i=e.querySelector(".services__more");if(a&&l&&i){let r=i.querySelector("span"),c=Array.from(l.children),o=!1;function t(){let n=o?c.length:Math.min(5,c.length);var e=l.getBoundingClientRect().top,t=c[n-1];c.forEach((e,t)=>{e.inert=t>=n}),a.style.maxHeight=t?Math.ceil(t.getBoundingClientRect().bottom-e)+"px":"0px",i.hidden=c.length<=5,i.classList.toggle("services__more--expanded",o),r&&(r.textContent=o?"Скрыть":"Показать ещё")}t(),i.addEventListener("click",()=>{o=!o,t()}),window.addEventListener("resize",t),document.fonts&&document.fonts.ready.then(t)}});n=document.querySelectorAll("input[type=search]");0<n.length&&n.forEach(a=>{let l=a.closest(".search-wrapper");if(l){let t=l.querySelector(".popup__search-result"),c=l.querySelector(".popup__search"),o=t.querySelector(".no-results-message");a.addEventListener("input",function(){let n=a.value.toUpperCase();var e=l.querySelectorAll(".search-list");let r=0;e.forEach(e=>{var t=e.getElementsByTagName("li");for(let e=0;e<t.length;e++)-1<t[e].querySelector(".search-name").innerHTML.toUpperCase().indexOf(n)?(t[e].classList.remove("none"),r++):t[e].classList.add("none")}),o.classList.toggle("none",0<r),""===a.value.trim()?(t.classList.add("none"),c.classList.remove("none")):(t.classList.remove("none"),c.classList.add("none"))}),document.addEventListener("click",e=>{l.contains(e.target)||t.classList.add("none")})}}),document.querySelectorAll(".accordion").forEach(t=>{let n=t.querySelector(".accordion__content")||t.parentElement.querySelector(".accordion__content");if(n){let e=t.classList.contains("active")||n.classList.contains("active");function r(){t.classList.toggle("active",e),n.classList.toggle("active",e),n.style.maxHeight=e?n.scrollHeight+"px":"0px"}r(),t.addEventListener("click",()=>{e=!e,r()}),window.addEventListener("load",r),window.addEventListener("resize",r)}});function u(){var e=document.querySelectorAll(".quantity-card"),n=document.querySelector(".quantity span");if(n){let t=0;e.forEach(e=>{null!==e.offsetParent&&t++}),n.textContent=t}}document.querySelectorAll(".tab-btn").forEach(e=>{e&&e.addEventListener("click",function(e){var t,n,r,c;c=(t=this).closest(".tab"),t.classList.contains("active")||(n=t.dataset.id,n=c.querySelectorAll(`.tab-content[data-id="${n}"]`),(r=c.querySelector(".tab-btn.active"))&&r.classList.remove("active"),c.querySelectorAll(".tab-content.active").forEach(e=>e.classList.remove("active")),t.classList.add("active"),n.forEach(e=>e.classList.add("active"))),u()})}),setTimeout(u,100);document.querySelectorAll(".btn-more").forEach(n=>{if(n){let t=n.previousElementSibling;if(console.log(t),console.log(t.scrollHeight),console.log(t.clientHeight),t.scrollHeight<=t.clientHeight)n.style.display="none";else{let e=n.innerHTML;n.addEventListener("click",function(){t.style.maxHeight;this.classList.toggle("active"),t.style.maxHeight?(t.style.maxHeight=null,this.textContent=e):(t.style.maxHeight=t.scrollHeight+"px",this.textContent="Свернуть")})}}});n=document.querySelector(".navigation");if(n){var m=document.querySelectorAll(".text-block h1, .text-block h2, .text-block h3, .text-block h4");if(0<m.length){for(let e=0;e<m.length;e+=1){var h=m[e],p=h.textContent,g=document.querySelector(".navigation__list"),f=document.createElement("li"),v=document.createElement("a");"H1"==h.tagName&&f.classList.add("nav-title-h1"),f.classList.add("navigation__item"),"H2"==h.tagName?f.classList.add("nav-title-h2"):"H3"==h.tagName?f.classList.add("nav-title-h3"):"H4"==h.tagName?f.classList.add("nav-title-h4"):"H5"==h.tagName?f.classList.add("nav-title-h5"):"H6"==h.tagName&&f.classList.add("nav-title-h6"),v.classList.add("navigation__link"),h.setAttribute("id",""+e),v.setAttribute("href","$"+e),v.textContent=" "+p,f.append(v),g.append(f)}document.querySelectorAll('a[href^="$"').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();e=this.getAttribute("href").substring(1),e=document.getElementById(e).getBoundingClientRect().top;window.scrollBy({top:e-120,behavior:"smooth"})})})}else n.querySelector(".navigation")&&n.querySelector(".navigation").remove()}document.querySelectorAll(".calculator").forEach(e=>{let a=e.querySelector(".calculator__form"),l=e.querySelector(".calculator__range"),i=e.querySelector(".calculator__range-value"),s=e.querySelector(".calculator__total"),d=Array.from(e.querySelectorAll(".calculator__tariff")).sort((e,t)=>Number(e.dataset.minPrice)-Number(t.dataset.minPrice));function t(){var e=Number(l.value),t=Number(l.min),n=Number(l.max),r=1===e?"день":e<5?"дня":"дней";let c=(e-t)*(Number(l.dataset.price)||0),o=(a.querySelectorAll(".calculator__radio:checked").forEach(e=>{c+=Number(e.dataset.price)||0}),i.textContent=e+" "+r,s.textContent=c.toLocaleString("ru-RU"),l.style.setProperty("--range-progress",(t<n?(e-t)/(n-t)*100:0)+"%"),d[0]);d.forEach(e=>{c>=Number(e.dataset.minPrice)&&(o=e)}),d.forEach(e=>{e.hidden=e!==o})}a&&l&&i&&s&&d.length&&(t(),a.addEventListener("input",t))}),document.querySelectorAll(".about").forEach(e=>{e=e.querySelectorAll(".about__card");if(e.length&&"IntersectionObserver"in window&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches){let t=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting){t.unobserve(e.target);let o=Array.from(e.target.querySelectorAll(".js-count")).map(e=>({element:e,text:e.textContent,value:Number(e.textContent.trim())})).filter(e=>Number.isFinite(e.value));if(o.length){let c=null;o.forEach(e=>{e.element.textContent="0"}),requestAnimationFrame(function e(t){null===c&&(c=t);let n=Math.min((t-c)/1200,1),r=1-Math.pow(1-n,3);o.forEach(e=>{e.element.textContent=1===n?e.text:String(Math.floor(e.value*r))}),n<1&&requestAnimationFrame(e)})}}})},{threshold:.35});e.forEach(e=>t.observe(e))}}),document.querySelectorAll(".reviewform__form").forEach(e=>{let o=e.querySelector(".reviewform__file"),a=e.querySelector(".reviewform__files");if(o&&a){let c=Array.from(o.files);o.addEventListener("change",()=>{var e=[...c];for(let t of o.files)e.some(e=>e.name===t.name&&e.size===t.size&&e.lastModified===t.lastModified&&e.type===t.type)||e.push(t);var t=5<e.length;t||(c=e);let n=new DataTransfer;c.forEach(e=>n.items.add(e)),o.files=n.files;var r=[];t&&r.push("Можно прикрепить не более 5 файлов. Новые файлы не добавлены."),c.length&&(t=c.map(e=>e.name).join(", "),r.push(`Прикреплено файлов: ${c.length} — `+t)),a.textContent=r.join(" ")}),e.addEventListener("reset",()=>{c=[],a.textContent=""})}}),document.querySelectorAll(".articles").forEach(e=>{let r=e.querySelector(".articles__list");e=e.querySelector(".articles__pagination");if(!r||!e)return;let c=Array.from(r.querySelectorAll(".articles__card")),n=e.querySelector(".articles__pages"),o=e.querySelector(".articles__page--prev"),a=e.querySelector(".articles__page--next"),l=5,i=Math.ceil(c.length/l);if(!n||!o||!a||i<=1)return;let s=window.matchMedia("(max-width: 768px)"),d=1,u=()=>{var t=new Set([1,d,i]),e=s.matches?3:5;if(i<=e)for(let e=1;e<=i;e++)t.add(e);else s.matches&&d!==i||1<d&&t.add(d-1),s.matches&&1!==d||d<i&&t.add(d+1);let r=Array.from(t).sort((e,t)=>e-t),c=document.createDocumentFragment();r.forEach((e,t)=>{0<t&&1<e-r[t-1]&&((t=document.createElement("span")).className="articles__ellipsis",t.textContent="...",c.append(t));var t=e===d,n=document.createElement(t?"span":"button");n.className="articles__page",n.textContent=e,t?(n.classList.add("articles__page--active"),n.title="Текущая страница"):(n.type="button",n.addEventListener("click",()=>m(e,!0))),c.append(n)}),n.replaceChildren(c),o.disabled=1===d,a.disabled=d===i},m=(e,t=!1)=>{if(!(e<1||e>i)){let n=((d=e)-1)*l;c.forEach((e,t)=>{e.hidden=t<n||t>=n+l}),u(),t&&(c[n].focus({preventScroll:!0}),r.scrollIntoView({block:"start"}))}};o.addEventListener("click",()=>m(d-1,!0)),a.addEventListener("click",()=>m(d+1,!0)),s.addEventListener("change",u),e.hidden=!1,m(1)});let y=document.querySelector(".cookie");if(y){let t="narkolog.cookie.accepted",n="narkolog.cookie.dismissed",e=!0;try{e="1"!==localStorage.getItem(t)&&"1"!==sessionStorage.getItem(n)}catch{}e&&(y.hidden=!1,y.addEventListener("click",function(e){e=e.target.closest(".cookie__accept, .cookie__close");if(e){y.hidden=!0;try{e.classList.contains("cookie__accept")?localStorage.setItem(t,"1"):sessionStorage.setItem(n,"1")}catch{}}}))}document.querySelectorAll(".helpwidget").forEach(e=>{let t=e.querySelector(".helpwidget__toggle"),n=e.querySelector(".helpwidget__panel"),r=e.querySelector(".helpwidget__close");function c(e){t.hidden=e,n.hidden=!e,(e?r:t).focus({preventScroll:!0})}t&&n&&r&&(t.addEventListener("click",function(){c(!0)}),r.addEventListener("click",function(){c(!1)}),e.addEventListener("keydown",function(e){"Escape"!==e.key||n.hidden||document.querySelector(".popup.active")||c(!1)}))})}),document.querySelectorAll(".calcpage").forEach(e=>{let a=e.querySelector(".calcpage__form"),t=Array.from(e.querySelectorAll(".calcpage__step")),n=e.querySelector(".calcpage__progress-value"),r=e.querySelector(".calcpage__progress-text"),l=e.querySelector(".calcpage__receipt-list"),i=e.querySelector(".calcpage__total-value"),s=e.querySelector(".calcpage__submit-price");if(a&&t.length&&n&&r){let c=0;e.querySelectorAll(".calcpage__next").forEach(e=>{e.addEventListener("click",function(){u(c+1)})}),e.querySelectorAll(".calcpage__back").forEach(e=>{e.addEventListener("click",function(){u(c-1)})});e=e.querySelector(".calcpage__restart");function d(e){return Number(e).toLocaleString("ru-RU")+" ₽"}function o(){var e=a.querySelector('input[name="calc-duration"]:checked'),t=a.querySelector('input[name="calc-place"]:checked'),n=Array.from(a.querySelectorAll('input[name="calc-extra"]:checked')),r=[];let o=0;0===c?r.push({value:"Время прибытия",dataset:{label:"Время прибытия",price:"3500"}}):e&&r.push(e),t&&r.push(t),2<=c&&r.push(...n),l&&(l.innerHTML=""),r.forEach(e=>{var t,n,r,c=Number(e.dataset.price)||0;o+=c,l&&l.append((e=e.dataset.label||e.value,c=c,t=document.createElement("div"),n=document.createElement("span"),r=document.createElement("span"),t.className="calcpage__receipt-row",n.textContent=e,r.textContent=d(c),t.append(n,r),t))}),i&&(i.textContent=d(o)),s&&(s.textContent=d(o))}function u(e){c=Math.max(0,Math.min(e,t.length-1)),t.forEach((e,t)=>{e.hidden=t!==c}),n.style.width=(c+1)/t.length*100+"%",r.textContent="Шаг "+(c+1)+" из "+t.length,o()}e&&e.addEventListener("click",function(){u(2)}),a.addEventListener("input",function(e){e.target.matches('input[name="calc-duration"], input[name="calc-place"], input[name="calc-extra"]')&&o()}),u(0)}});
-//# sourceMappingURL=main.js.map
+Fancybox.bind("[data-fancybox]", {
+	// Your custom options
+});
+
+// animation
+const animationItems = document.querySelectorAll(".animation-item");
+if (animationItems.length > 0) {
+	function onEntry(e) {
+		e.forEach((e) => {
+			e.isIntersecting && e.target.classList.add("animation-active");
+		});
+	}
+	let options = {
+			threshold: [0.5],
+		},
+		observer = new IntersectionObserver(onEntry, options);
+	for (let e of animationItems) observer.observe(e);
+}
+// end animation
+
+let scrollWidthFunc = () => {
+	let scrollWidth = window.innerWidth - document.body.clientWidth;
+	document.querySelector("html").style.paddingRight = scrollWidth + "px";
+	//document.querySelector("header").style.paddingRight = scrollWidth + "px";
+};
+
+// scroll top
+/* scroll top */
+const scrollTop = document.querySelector(".scroll-top");
+
+if (scrollTop) {
+	const showAfter = 260;
+	function updateScrollTop() {
+		scrollTop.hidden = window.scrollY < showAfter;
+	}
+	updateScrollTop();
+	window.addEventListener("scroll", updateScrollTop, { passive: true });
+	window.addEventListener("pageshow", updateScrollTop);
+	scrollTop.addEventListener("click", function (event) {
+		event.preventDefault();
+		window.scrollTo({ top: 0, behavior: "smooth" });
+	});
+}
+/* end scroll top */
+
+document.addEventListener("DOMContentLoaded", function () {
+	/* burger menu */
+	const burgerMenu = document.querySelector(".burger");
+	if (burgerMenu) {
+		const headerMobile = document.querySelector(".header__bottom");
+		burgerMenu.addEventListener("click", () => {
+			if (burgerMenu.classList.contains("active")) {
+				document.body.classList.remove("burger-lock");
+			} else {
+				document.body.classList.add("burger-lock");
+			}
+			headerMobile.classList.toggle("active");
+			burgerMenu.classList.toggle("active");
+
+			document.querySelector("html").classList.toggle("burger-lock");
+		});
+	}
+	/* end burger menu */
+
+	/* header */
+	const headerBlock = document.querySelector(".header");
+	if (headerBlock) {
+		const headerBurger = headerBlock.querySelector(".burger");
+		const headerTop = headerBlock.querySelector(".header__top");
+		const headerMiddle = headerBlock.querySelector(".header__middle");
+		const headerToggles = headerBlock.querySelectorAll(".header__toggle");
+
+		if (headerBurger) {
+			headerBurger.addEventListener("click", function () {
+				const isActive = this.classList.contains("active");
+				headerBlock.classList.toggle("header--open", isActive);
+			});
+		}
+
+		function updateHeader() {
+			if (window.innerWidth > 1024) {
+				if (headerBurger && headerBurger.classList.contains("active")) {
+					headerBurger.click();
+				}
+				if (headerTop && headerMiddle) {
+					const headerOffset = headerTop.offsetHeight + headerMiddle.offsetHeight;
+					headerBlock.style.setProperty("--header-offset", -headerOffset + "px");
+				}
+				headerToggles.forEach((btn) => {
+					const item = btn.closest(".header__item");
+					if (item) item.classList.remove("active");
+				});
+			} else {
+				headerBlock.style.setProperty("--header-offset", "0px");
+			}
+		}
+
+		updateHeader();
+		window.addEventListener("load", updateHeader);
+		window.addEventListener("resize", updateHeader);
+
+		headerToggles.forEach((btn) => {
+			btn.addEventListener("click", function () {
+				if (window.innerWidth > 1024) return;
+				const item = this.closest(".header__item");
+				if (item) {
+					item.classList.toggle("active");
+				}
+			});
+		});
+
+		const headerItems = headerBlock.querySelectorAll(".header__item");
+		headerItems.forEach((item) => {
+			function checkDropdown() {
+				if (window.innerWidth <= 1024) return;
+				const dropdown = item.querySelector(":scope > .header__dropdown");
+				if (dropdown) {
+					dropdown.classList.remove("header__dropdown--left");
+					const dropdownPosition = dropdown.getBoundingClientRect();
+					dropdown.classList.toggle("header__dropdown--left", dropdownPosition.right > window.innerWidth - 10);
+				}
+			}
+			item.addEventListener("mouseenter", checkDropdown);
+			item.addEventListener("focusin", checkDropdown);
+		});
+
+		document.addEventListener("keydown", function (e) {
+			if (e.key === "Escape" && headerBurger && headerBurger.classList.contains("active")) {
+				headerBurger.click();
+				headerBurger.focus();
+			}
+		});
+	}
+	/* end header */
+
+	// Popups
+	function popupClose(popupActive) {
+		popupActive.classList.remove("open");
+		setTimeout(() => {
+			if (!popupActive.classList.contains("open")) {
+				popupActive.classList.remove("active");
+			}
+		}, 400);
+		document.body.classList.remove("lock");
+		document.querySelector("html").style.paddingRight = 0;
+		document.querySelector("html").classList.remove("lock");
+	}
+	const popupOpenBtns = document.querySelectorAll(".popup-btn");
+	const popups = document.querySelectorAll(".popup");
+	const originalTitlePopup2 = document.querySelector(".original-title")?.innerHTML;
+	const closePopupBtns = document.querySelectorAll(".close-popup-btn");
+	closePopupBtns.forEach(function (el) {
+		el.addEventListener("click", function (e) {
+			popupClose(e.target.closest(".popup"));
+		});
+	});
+	popupOpenBtns.forEach(function (el) {
+		el.addEventListener("click", function (e) {
+			e.preventDefault();
+			const path = e.currentTarget.dataset.path;
+			const currentPopup = document.querySelector(`[data-target="${path}"]`);
+			if (currentPopup) {
+				popups.forEach(function (popup) {
+					popupClose(popup);
+					popup.addEventListener("click", function (e) {
+						if (!e.target.closest(".popup__content")) {
+							popupClose(e.target.closest(".popup"));
+						}
+					});
+				});
+				currentPopup.classList.add("active");
+				setTimeout(() => {
+					currentPopup.classList.add("open");
+				}, 10);
+				if (currentPopup.getAttribute("data-target") == "popup-change") {
+					let originaTitle = currentPopup.querySelector(".original-title");
+					if (el.classList.contains("change-item__btn")) {
+						if (el.classList.contains("doctor__btn-js")) {
+							let currentItem = el.closest(".change-item");
+							let currentTitile = currentItem.querySelector(".change-item__title");
+							originaTitle.innerHTML = "Записаться на приём к врачу: " + currentTitile.innerHTML;
+						} else {
+							if (el.classList.contains("change-item__btn_current")) {
+								originaTitle.textContent = el.textContent;
+							} else {
+								let currentItem = el.closest(".change-item");
+								let currentTitile = currentItem.querySelector(".change-item__title");
+								originaTitle.innerHTML = currentTitile.innerHTML;
+							}
+						}
+					} else {
+						originaTitle.innerHTML = originalTitlePopup2;
+					}
+				}
+
+				if (currentPopup.getAttribute("data-target") == "popup-jobs") {
+					let currentItems = el.closest(".jobs__items");
+					let originalText = currentPopup.querySelector(".jobs__inner_original");
+					if (originalText && currentItems.querySelector(".jobs__inner")) {
+						originalText.innerHTML = currentItems.querySelector(".jobs__inner").innerHTML;
+					}
+				}
+				e.stopPropagation();
+				scrollWidthFunc();
+				document.querySelector("html").classList.add("lock");
+			}
+		});
+	});
+	// end popups
+
+	/* yandex map */
+	const mapPlaceholder = document.getElementById("map-placeholder");
+	if (mapPlaceholder) {
+		mapPlaceholder.addEventListener("mouseenter", loadMap, { once: true });
+		mapPlaceholder.addEventListener("click", loadMap, { once: true });
+	} else {
+		loadMap();
+	}
+
+	function loadMap() {
+		if (!document.querySelector('[src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"]')) {
+			const script = document.createElement("script");
+			script.type = "text/javascript";
+			script.src = "https://api-maps.yandex.ru/2.1/?lang=ru_RU";
+			script.onload = initMap;
+			document.head.appendChild(script);
+		} else {
+			initMap();
+		}
+	}
+
+	function initMap() {
+		const mapPlaceholder = document.getElementById("map-placeholder");
+		if (mapPlaceholder) {
+			mapPlaceholder.remove();
+		}
+
+		ymaps.ready(function () {
+			const myMap = new ymaps.Map("map", {
+				center: [47.231129, 39.728721],
+				zoom: 13,
+				controls: [],
+			});
+
+			const myPlacemark = new ymaps.Placemark(
+				[47.231129, 39.728721],
+				{
+					hintContent: "Ростов-на-Дону, ул. Красноармейская, д. 227",
+					balloonContent: "Ростов-на-Дону, ул. Красноармейская, д. 227",
+				},
+				{
+					iconLayout: "default#image",
+					iconImageHref: "assets/img/icons/map-pin.svg", //заменить на свою иконку
+					iconImageSize: [35, 35],
+					iconImageOffset: [-15, -15],
+				},
+			);
+
+			myMap.geoObjects.add(myPlacemark);
+			myMap.behaviors.disable(["scrollZoom"]);
+		});
+	}
+	/* end yandex map */
+
+	/* home promos timer */
+	const promoTimers = document.querySelectorAll(".js-timer");
+	if (promoTimers.length) {
+		function updatePromoTimers() {
+			const now = new Date();
+			const endOfDay = new Date(now);
+			endOfDay.setHours(24, 0, 0, 0);
+
+			const remainingSeconds = Math.ceil((endOfDay - now) / 1000);
+			const hours = Math.floor(remainingSeconds / 3600);
+			const minutes = Math.floor((remainingSeconds % 3600) / 60);
+			const seconds = remainingSeconds % 60;
+			const value = [hours, minutes, seconds].map((number) => String(number).padStart(2, "0")).join(":");
+
+			promoTimers.forEach((timer) => {
+				timer.textContent = value;
+			});
+		}
+
+		updatePromoTimers();
+		setInterval(updatePromoTimers, 1000);
+		document.addEventListener("visibilitychange", updatePromoTimers);
+	}
+	/* end home promos timer */
+
+	/* services list */
+	document.querySelectorAll(".services").forEach((block) => {
+		const viewport = block.querySelector(".services__list-viewport");
+		const list = block.querySelector(".services__list");
+		const moreButton = block.querySelector(".services__more");
+		if (!viewport || !list || !moreButton) return;
+
+		const buttonText = moreButton.querySelector("span");
+		const items = Array.from(list.children);
+		const initialCount = 5;
+		let expanded = false;
+
+		function updateServicesList() {
+			const visibleCount = expanded ? items.length : Math.min(initialCount, items.length);
+			const listTop = list.getBoundingClientRect().top;
+			const lastItem = items[visibleCount - 1];
+			items.forEach((item, index) => {
+				item.inert = index >= visibleCount;
+			});
+			viewport.style.maxHeight = lastItem ? Math.ceil(lastItem.getBoundingClientRect().bottom - listTop) + "px" : "0px";
+			moreButton.hidden = items.length <= initialCount;
+			moreButton.classList.toggle("services__more--expanded", expanded);
+			if (buttonText) {
+				buttonText.textContent = expanded ? "Скрыть" : "Показать ещё";
+			}
+		}
+
+		updateServicesList();
+		moreButton.addEventListener("click", () => {
+			expanded = !expanded;
+			updateServicesList();
+		});
+		window.addEventListener("resize", updateServicesList);
+		if (document.fonts) {
+			document.fonts.ready.then(updateServicesList);
+		}
+	});
+	/* end services list */
+
+	/*  search */
+	const inputSearch = document.querySelectorAll("input[type=search]");
+	if (inputSearch.length > 0) {
+		inputSearch.forEach((elem) => {
+			const wrapper = elem.closest(".search-wrapper");
+			if (wrapper) {
+				const searchResultBlock = wrapper.querySelector(".popup__search-result");
+				const popularCitiesBlock = wrapper.querySelector(".popup__search");
+				const noResultsMessage = searchResultBlock.querySelector(".no-results-message");
+
+				function search() {
+					let filter = elem.value.toUpperCase();
+					let ul = wrapper.querySelectorAll(".search-list");
+					let totalResults = 0;
+
+					ul.forEach((item) => {
+						let li = item.getElementsByTagName("li");
+						for (let i = 0; i < li.length; i++) {
+							let a = li[i].querySelector(".search-name");
+							if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+								li[i].classList.remove("none");
+								totalResults++;
+							} else {
+								li[i].classList.add("none");
+							}
+						}
+					});
+					noResultsMessage.classList.toggle("none", totalResults > 0);
+
+					if (elem.value.trim() === "") {
+						searchResultBlock.classList.add("none");
+						popularCitiesBlock.classList.remove("none");
+					} else {
+						searchResultBlock.classList.remove("none");
+						popularCitiesBlock.classList.add("none");
+					}
+				}
+				elem.addEventListener("input", search);
+
+				document.addEventListener("click", (event) => {
+					if (!wrapper.contains(event.target)) {
+						searchResultBlock.classList.add("none");
+					}
+				});
+			}
+		});
+	}
+	/*  end search  */
+
+	/* accordion */
+	document.querySelectorAll(".accordion").forEach((accordion) => {
+		const content = accordion.querySelector(".accordion__content") || accordion.parentElement.querySelector(".accordion__content");
+		if (!content) return;
+		let isActive = accordion.classList.contains("active") || content.classList.contains("active");
+
+		function updateAccordion() {
+			accordion.classList.toggle("active", isActive);
+			content.classList.toggle("active", isActive);
+			content.style.maxHeight = isActive ? content.scrollHeight + "px" : "0px";
+		}
+		updateAccordion();
+
+		accordion.addEventListener("click", () => {
+			isActive = !isActive;
+			updateAccordion();
+		});
+		window.addEventListener("load", updateAccordion);
+		window.addEventListener("resize", updateAccordion);
+	});
+	/* end accordion */
+
+	/*  tab  */
+	const showTab = (elTabBtn) => {
+		const elTab = elTabBtn.closest(".tab");
+		if (elTabBtn.classList.contains("active")) {
+			return;
+		}
+		const targetId = elTabBtn.dataset.id;
+		const elTabPanes = elTab.querySelectorAll(`.tab-content[data-id="${targetId}"]`);
+
+		const elTabBtnActive = elTab.querySelector(".tab-btn.active");
+		if (elTabBtnActive) {
+			elTabBtnActive.classList.remove("active");
+		}
+
+		const elTabPaneShow = elTab.querySelectorAll(".tab-content.active");
+		elTabPaneShow.forEach((pane) => pane.classList.remove("active"));
+
+		elTabBtn.classList.add("active");
+		elTabPanes.forEach((pane) => pane.classList.add("active"));
+	};
+
+	const tabButtons = document.querySelectorAll(".tab-btn");
+	tabButtons.forEach((btn) => {
+		if (btn) {
+			btn.addEventListener("click", function (e) {
+				showTab(this);
+				quantityElem();
+			});
+		}
+	});
+	/*  end tab */
+
+	// quantity-card
+	function quantityElem() {
+		const quantityCards = document.querySelectorAll(".quantity-card");
+		const quantityElement = document.querySelector(".quantity span");
+		if (quantityElement) {
+			let visibleCards = 0;
+			quantityCards.forEach((card) => {
+				if (card.offsetParent !== null) {
+					visibleCards++;
+				}
+			});
+			quantityElement.textContent = visibleCards;
+		}
+	}
+	setTimeout(quantityElem, 100);
+
+	/*  btn more  */
+	const moreBtns = document.querySelectorAll(".btn-more");
+	moreBtns.forEach((moreBtn) => {
+		if (moreBtn) {
+			const moreContent = moreBtn.previousElementSibling;
+			console.log(moreContent);
+			console.log(moreContent.scrollHeight);
+			console.log(moreContent.clientHeight);
+
+			if (moreContent.scrollHeight <= moreContent.clientHeight) {
+				moreBtn.style.display = "none";
+			} else {
+				const textBtn = moreBtn.innerHTML;
+				moreBtn.addEventListener("click", function () {
+					const heightMoreContent = moreContent.style.maxHeight;
+					this.classList.toggle("active");
+
+					if (moreContent.style.maxHeight) {
+						moreContent.style.maxHeight = null;
+						this.textContent = textBtn;
+					} else {
+						moreContent.style.maxHeight = moreContent.scrollHeight + "px";
+						this.textContent = "Свернуть";
+					}
+				});
+			}
+		}
+	});
+	/*  end btn more  */
+
+	/* navigation */
+	const articleNavigation = document.querySelector(".navigation");
+	if (articleNavigation) {
+		const jsScrollBlockList = document.querySelectorAll(".text-block h1, .text-block h2, .text-block h3, .text-block h4");
+
+		if (jsScrollBlockList.length > 0) {
+			for (let i = 0; i < jsScrollBlockList.length; i += 1) {
+				const jsScrollBlock = jsScrollBlockList[i];
+				const titleBlock = jsScrollBlock.textContent;
+				const articleNavigationList = document.querySelector(".navigation__list");
+				const articleNavigationItem = document.createElement("li");
+				const articleNavigationLink = document.createElement("a");
+				if (jsScrollBlock.tagName == "H1") {
+					articleNavigationItem.classList.add("nav-title-h1");
+				}
+				articleNavigationItem.classList.add("navigation__item");
+				if (jsScrollBlock.tagName == "H2") {
+					articleNavigationItem.classList.add("nav-title-h2");
+				} else if (jsScrollBlock.tagName == "H3") {
+					articleNavigationItem.classList.add("nav-title-h3");
+				} else if (jsScrollBlock.tagName == "H4") {
+					articleNavigationItem.classList.add("nav-title-h4");
+				} else if (jsScrollBlock.tagName == "H5") {
+					articleNavigationItem.classList.add("nav-title-h5");
+				} else if (jsScrollBlock.tagName == "H6") {
+					articleNavigationItem.classList.add("nav-title-h6");
+				}
+				articleNavigationLink.classList.add("navigation__link");
+				jsScrollBlock.setAttribute("id", `${i}`);
+				articleNavigationLink.setAttribute("href", `$${i}`);
+				articleNavigationLink.textContent = " " + titleBlock;
+				articleNavigationItem.append(articleNavigationLink);
+				articleNavigationList.append(articleNavigationItem);
+			}
+			document.querySelectorAll('a[href^="$"').forEach((link) => {
+				link.addEventListener("click", function (e) {
+					e.preventDefault();
+					let href = this.getAttribute("href").substring(1);
+					const scrollTarget = document.getElementById(href);
+					const topOffset = 120;
+					const elementPosition = scrollTarget.getBoundingClientRect().top;
+					const offsetPosition = elementPosition - topOffset;
+					window.scrollBy({
+						top: offsetPosition,
+						behavior: "smooth",
+					});
+				});
+			});
+		} else {
+			if (articleNavigation.querySelector(".navigation")) {
+				articleNavigation.querySelector(".navigation").remove();
+			}
+		}
+	}
+	/* end navigation */
+
+	/* calculator */
+	document.querySelectorAll(".calculator").forEach((block) => {
+		const form = block.querySelector(".calculator__form");
+		const range = block.querySelector(".calculator__range");
+		const rangeValue = block.querySelector(".calculator__range-value");
+		const totalValue = block.querySelector(".calculator__total");
+		const tariffs = Array.from(block.querySelectorAll(".calculator__tariff")).sort((a, b) => Number(a.dataset.minPrice) - Number(b.dataset.minPrice));
+
+		if (!form || !range || !rangeValue || !totalValue || !tariffs.length) return;
+
+		function updateCalculator() {
+			const days = Number(range.value);
+			const minDays = Number(range.min);
+			const maxDays = Number(range.max);
+			const dayLabel = days === 1 ? "день" : days < 5 ? "дня" : "дней";
+
+			let total = (days - minDays) * (Number(range.dataset.price) || 0);
+
+			form.querySelectorAll(".calculator__radio:checked").forEach((input) => {
+				total += Number(input.dataset.price) || 0;
+			});
+
+			rangeValue.textContent = days + " " + dayLabel;
+			totalValue.textContent = total.toLocaleString("ru-RU");
+
+			range.style.setProperty("--range-progress", (maxDays > minDays ? ((days - minDays) / (maxDays - minDays)) * 100 : 0) + "%");
+
+			let currentTariff = tariffs[0];
+
+			tariffs.forEach((tariff) => {
+				if (total >= Number(tariff.dataset.minPrice)) {
+					currentTariff = tariff;
+				}
+			});
+
+			tariffs.forEach((tariff) => {
+				tariff.hidden = tariff !== currentTariff;
+			});
+		}
+
+		updateCalculator();
+
+		form.addEventListener("input", updateCalculator);
+	});
+	/* end calculator */
+
+	/* about center counters */
+	document.querySelectorAll(".about").forEach((block) => {
+		const cards = block.querySelectorAll(".about__card");
+		if (!cards.length || !("IntersectionObserver" in window)) return;
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (!entry.isIntersecting) return;
+
+					observer.unobserve(entry.target);
+
+					const counters = Array.from(entry.target.querySelectorAll(".js-count"))
+						.map((element) => ({
+							element,
+							text: element.textContent,
+							value: Number(element.textContent.trim()),
+						}))
+						.filter((counter) => Number.isFinite(counter.value));
+
+					if (!counters.length) return;
+
+					const duration = 1200;
+					let start = null;
+
+					counters.forEach((counter) => {
+						counter.element.textContent = "0";
+					});
+
+					function updateCount(timestamp) {
+						if (start === null) start = timestamp;
+
+						const progress = Math.min((timestamp - start) / duration, 1);
+						const easedProgress = 1 - Math.pow(1 - progress, 3);
+
+						counters.forEach((counter) => {
+							counter.element.textContent = progress === 1 ? counter.text : String(Math.floor(counter.value * easedProgress));
+						});
+
+						if (progress < 1) {
+							requestAnimationFrame(updateCount);
+						}
+					}
+
+					requestAnimationFrame(updateCount);
+				});
+			},
+			{
+				threshold: 0.35,
+			},
+		);
+
+		cards.forEach((card) => observer.observe(card));
+	});
+	/* end about center counters */
+
+	/* reviewform */
+	document.querySelectorAll(".reviewform__form").forEach((form) => {
+		const input = form.querySelector(".reviewform__file");
+		const status = form.querySelector(".reviewform__files");
+		if (!input || !status) return;
+
+		const maxFiles = 5;
+		let attachedFiles = Array.from(input.files);
+
+		input.addEventListener("change", () => {
+			const nextFiles = [...attachedFiles];
+
+			for (const file of input.files) {
+				const alreadyAttached = nextFiles.some(
+					(attached) => attached.name === file.name && attached.size === file.size && attached.lastModified === file.lastModified && attached.type === file.type,
+				);
+
+				if (!alreadyAttached) nextFiles.push(file);
+			}
+
+			const tooManyFiles = nextFiles.length > maxFiles;
+			if (!tooManyFiles) attachedFiles = nextFiles;
+
+			const transfer = new DataTransfer();
+			attachedFiles.forEach((file) => transfer.items.add(file));
+			input.files = transfer.files;
+
+			const messages = [];
+
+			if (tooManyFiles) {
+				messages.push(`Можно прикрепить не более ${maxFiles} файлов. Новые файлы не добавлены.`);
+			}
+
+			if (attachedFiles.length) {
+				const names = attachedFiles.map((file) => file.name).join(", ");
+				messages.push(`Прикреплено файлов: ${attachedFiles.length} — ${names}`);
+			}
+
+			status.textContent = messages.join(" ");
+		});
+
+		form.addEventListener("reset", () => {
+			attachedFiles = [];
+			status.textContent = "";
+		});
+	});
+	/* end reviewform */
+
+	/* articles pagination */
+	document.querySelectorAll(".articles").forEach((block) => {
+		const list = block.querySelector(".articles__list");
+		const pagination = block.querySelector(".articles__pagination");
+		if (!list || !pagination) return;
+
+		const cards = Array.from(list.querySelectorAll(".articles__card"));
+		const pages = pagination.querySelector(".articles__pages");
+		const prev = pagination.querySelector(".articles__page--prev");
+		const next = pagination.querySelector(".articles__page--next");
+		const perPage = 5;
+		const pageCount = Math.ceil(cards.length / perPage);
+
+		if (!pages || !prev || !next || pageCount <= 1) return;
+
+		const mobile = window.matchMedia("(max-width: 768px)");
+		let currentPage = 1;
+
+		const renderPages = () => {
+			const visiblePages = new Set([1, currentPage, pageCount]);
+			const maxNumbers = mobile.matches ? 3 : 5;
+
+			if (pageCount <= maxNumbers) {
+				for (let page = 1; page <= pageCount; page++) {
+					visiblePages.add(page);
+				}
+			} else {
+				if (!mobile.matches || currentPage === pageCount) {
+					if (currentPage > 1) visiblePages.add(currentPage - 1);
+				}
+				if (!mobile.matches || currentPage === 1) {
+					if (currentPage < pageCount) visiblePages.add(currentPage + 1);
+				}
+			}
+
+			const numbers = Array.from(visiblePages).sort((a, b) => a - b);
+			const fragment = document.createDocumentFragment();
+
+			numbers.forEach((number, index) => {
+				if (index > 0 && number - numbers[index - 1] > 1) {
+					const ellipsis = document.createElement("span");
+					ellipsis.className = "articles__ellipsis";
+					ellipsis.textContent = "...";
+					fragment.append(ellipsis);
+				}
+
+				const active = number === currentPage;
+				const item = document.createElement(active ? "span" : "button");
+				item.className = "articles__page";
+				item.textContent = number;
+
+				if (active) {
+					item.classList.add("articles__page--active");
+					item.title = "Текущая страница";
+				} else {
+					item.type = "button";
+					item.addEventListener("click", () => showPage(number, true));
+				}
+
+				fragment.append(item);
+			});
+
+			pages.replaceChildren(fragment);
+			prev.disabled = currentPage === 1;
+			next.disabled = currentPage === pageCount;
+		};
+
+		const showPage = (page, moveToList = false) => {
+			if (page < 1 || page > pageCount) return;
+
+			currentPage = page;
+			const start = (page - 1) * perPage;
+
+			cards.forEach((card, index) => {
+				card.hidden = index < start || index >= start + perPage;
+			});
+
+			renderPages();
+
+			if (moveToList) {
+				cards[start].focus({ preventScroll: true });
+				list.scrollIntoView({ block: "start" });
+			}
+		};
+
+		prev.addEventListener("click", () => showPage(currentPage - 1, true));
+		next.addEventListener("click", () => showPage(currentPage + 1, true));
+		mobile.addEventListener("change", renderPages);
+
+		pagination.hidden = false;
+		showPage(1);
+	});
+	/* end articles pagination */
+
+	/* cookie */
+	const cookieBanner = document.querySelector(".cookie");
+	if (cookieBanner) {
+		const cookieAcceptedKey = "narkolog.cookie.accepted";
+		const cookieDismissedKey = "narkolog.cookie.dismissed";
+		let showCookieBanner = true;
+		try {
+			showCookieBanner = localStorage.getItem(cookieAcceptedKey) !== "1" && sessionStorage.getItem(cookieDismissedKey) !== "1";
+		} catch {
+			// Если хранилище недоступно, плашку всё равно можно закрыть.
+		}
+
+		if (showCookieBanner) {
+			cookieBanner.hidden = false;
+			cookieBanner.addEventListener("click", function (event) {
+				const button = event.target.closest(".cookie__accept, .cookie__close");
+				if (!button) return;
+				cookieBanner.hidden = true;
+				try {
+					if (button.classList.contains("cookie__accept")) {
+						localStorage.setItem(cookieAcceptedKey, "1");
+					} else {
+						sessionStorage.setItem(cookieDismissedKey, "1");
+					}
+				} catch {}
+			});
+		}
+	}
+	/* end cookie */
+
+	/* helpwidget */
+	document.querySelectorAll(".helpwidget").forEach((widget) => {
+		const toggle = widget.querySelector(".helpwidget__toggle");
+		const panel = widget.querySelector(".helpwidget__panel");
+		const close = widget.querySelector(".helpwidget__close");
+		if (!toggle || !panel || !close) return;
+
+		function setWidgetOpen(isOpen) {
+			toggle.hidden = isOpen;
+			panel.hidden = !isOpen;
+			const focusTarget = isOpen ? close : toggle;
+			focusTarget.focus({ preventScroll: true });
+		}
+
+		toggle.addEventListener("click", function () {
+			setWidgetOpen(true);
+		});
+
+		close.addEventListener("click", function () {
+			setWidgetOpen(false);
+		});
+
+		widget.addEventListener("keydown", function (event) {
+			if (event.key === "Escape" && !panel.hidden && !document.querySelector(".popup.active")) {
+				setWidgetOpen(false);
+			}
+		});
+	});
+	/* end helpwidget */
+});
+
+/* multi-step calculator */
+document.querySelectorAll(".calcpage").forEach((block) => {
+	const form = block.querySelector(".calcpage__form");
+	const steps = Array.from(block.querySelectorAll(".calcpage__step"));
+	const progressValue = block.querySelector(".calcpage__progress-value");
+	const progressText = block.querySelector(".calcpage__progress-text");
+	const receiptList = block.querySelector(".calcpage__receipt-list");
+	const totalValue = block.querySelector(".calcpage__total-value");
+	const submitPrice = block.querySelector(".calcpage__submit-price");
+
+	if (!form || !steps.length || !progressValue || !progressText) return;
+
+	let currentStep = 0;
+
+	function formatPrice(value) {
+		return Number(value).toLocaleString("ru-RU") + " ₽";
+	}
+
+	function createReceiptRow(label, price) {
+		const row = document.createElement("div");
+		const name = document.createElement("span");
+		const value = document.createElement("span");
+
+		row.className = "calcpage__receipt-row";
+		name.textContent = label;
+		value.textContent = formatPrice(price);
+		row.append(name, value);
+
+		return row;
+	}
+
+	function updateReceipt() {
+		const duration = form.querySelector('input[name="calc-duration"]:checked');
+		const place = form.querySelector('input[name="calc-place"]:checked');
+		const extras = Array.from(form.querySelectorAll('input[name="calc-extra"]:checked'));
+		const selected = [];
+		let total = 0;
+
+		if (currentStep === 0) {
+			selected.push({
+				value: "Время прибытия",
+				dataset: {
+					label: "Время прибытия",
+					price: "3500",
+				},
+			});
+		} else if (duration) {
+			selected.push(duration);
+		}
+
+		if (place) selected.push(place);
+		if (currentStep >= 2) selected.push(...extras);
+
+		if (receiptList) receiptList.innerHTML = "";
+
+		selected.forEach((input) => {
+			const price = Number(input.dataset.price) || 0;
+			total += price;
+
+			if (receiptList) {
+				receiptList.append(createReceiptRow(input.dataset.label || input.value, price));
+			}
+		});
+
+		if (totalValue) totalValue.textContent = formatPrice(total);
+		if (submitPrice) submitPrice.textContent = formatPrice(total);
+	}
+
+	function showStep(index) {
+		currentStep = Math.max(0, Math.min(index, steps.length - 1));
+
+		steps.forEach((step, stepIndex) => {
+			step.hidden = stepIndex !== currentStep;
+		});
+
+		progressValue.style.width = ((currentStep + 1) / steps.length) * 100 + "%";
+		progressText.textContent = "Шаг " + (currentStep + 1) + " из " + steps.length;
+		updateReceipt();
+	}
+
+	block.querySelectorAll(".calcpage__next").forEach((button) => {
+		button.addEventListener("click", function () {
+			showStep(currentStep + 1);
+		});
+	});
+
+	block.querySelectorAll(".calcpage__back").forEach((button) => {
+		button.addEventListener("click", function () {
+			showStep(currentStep - 1);
+		});
+	});
+
+	const restart = block.querySelector(".calcpage__restart");
+
+	if (restart) {
+		restart.addEventListener("click", function () {
+			showStep(2);
+		});
+	}
+
+	form.addEventListener("input", function (event) {
+		if (event.target.matches('input[name="calc-duration"], input[name="calc-place"], input[name="calc-extra"]')) {
+			updateReceipt();
+		}
+	});
+
+	showStep(0);
+});
+/* end multi-step calculator */
